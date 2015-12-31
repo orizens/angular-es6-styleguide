@@ -27,6 +27,8 @@ TBD
 
   1. [Single Responsibility](#single-responsibility)
   1. [Modules](#modules)
+  1. [Controllers](#controllers)
+  1. [Components](#components)
   1. [Services](#services)
 
 ## Single Responsibility
@@ -103,6 +105,68 @@ TBD
   1. a controller ES2015 class  
   1. a template file  
   1. a spec file  
+
+## Controllers
+  - Use ES2015 class for controller
+  - User **Object.assign** to expose injected services to a class methods (make it public)  
+
+```
+/* @ngInject */
+export default class YoutubeVideosCtrl {
+	
+	/* @ngInject */
+	constructor (YoutubePlayerSettings, YoutubeSearch, YoutubeVideoInfo) {
+		Object.assign(this, { YoutubePlayerSettings, YoutubeVideoInfo });
+		this.videos = YoutubePlayerSettings.items;
+		
+		YoutubeSearch.resetPageToken();
+		if (!this.videos.length) {
+			YoutubeSearch.search();
+		}
+	}
+
+	playVideo (video) {
+		this.YoutubePlayerSettings.queueVideo(video);
+		this.YoutubePlayerSettings.playVideoId(video);
+	}
+
+	playPlaylist (playlist) {
+		return this.YoutubeVideoInfo.getPlaylist(playlist.id).then(this.YoutubePlayerSettings.playPlaylist);
+	}
+}
+```  
+
+## Components
+  - Define a component in X.component.js file using the directive defintion (pre angular v1.5) or component (from v1.5) definition.  
+  - import controller from a seperate file
+  - import template form a separate file (use module loader support to load text files)  
+
+```
+// playlist-saver.component.js
+import PlaylistSaverCtrl from './playlist-saver.ctrl.js';
+import template from './playlist-saver.tpl.html';
+
+// Usage:
+//	<playlist-saver></playlist-saver>
+
+/* @ngInject */
+export default function playlistSaver () {
+    var directive = {
+        template,
+        controller: PlaylistSaverCtrl,
+        controllerAs: 'playlistSaver',
+        bindToController: true,
+        restrict: 'E',
+        replace: true,
+        scope: {
+            onSave: '&?',
+            onCancel: '&?',
+            tracks: '='
+        }
+    };
+    return directive;
+}
+```
 
 ## Services
 
