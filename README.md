@@ -9,7 +9,7 @@ This styleguide is also inspired from [@angularclass's boilerplates](http://gith
 ## Purpose
 *Opinionated Angular.js written with ES2015 and module loadeing style guide for teams by [@orizens](//twitter.com/orizens)*
 
-If you are looking for an opinionated style guide for syntax, conventions, and structuring Angular.js applications v 1.x with ES2015 and module loading, then this is it. These styles are based on my development experience with [Angular.js](//angularjs.org) and the [Echoes Player](http://echotu.be) [Open Source Project Development](http://github.com/orizens/echoes).
+If you are looking for an opinionated style guide for syntax, conventions, and structuring Angular.js applications v 1.x with ES2015 and module loading, then this is it. These styles are based on my development experience with [Angular.js](//angularjs.org) and the [Echoes Player](http://echotu.be), [Open Source Project Development (currently the es2015 branch)](https://github.com/orizens/echoes/tree/es2015).
 
 The purpose of this style guide is to provide guidance on building Angular applications with ES2015 and module loading by showing the conventions I use and in order to prepare angular v 1.x code to angular v 2.
 
@@ -103,6 +103,9 @@ TBD
   1. a controller ES2015 class  
   1. a template file  
   1. a spec file  
+
+## Services
+
 
 ## Application Structure
 
