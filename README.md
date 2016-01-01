@@ -1,6 +1,8 @@
 
 # Angular ES2015 Style Guide
 
+## This is still a Work In Progress - Please Collaborate
+
 ## Endorsements
 The idea for this styleguide is inspired from [john papa's angular style guide](https://github.com/johnpapa/angular-styleguide) which is focused on angular version 1.x, written with ES5.  
 Some sections are currently taken from john papa's styleguide and are subject to change in the future (as this stylguide grows).  
