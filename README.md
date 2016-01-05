@@ -4,8 +4,8 @@
 ## This is still a Work In Progress - Please Collaborate
 
 ## Endorsements
-The idea for this styleguide is inspired from [john papa's angular style guide](https://github.com/johnpapa/angular-styleguide) which is focused on angular version 1.x, written with ES5.  
-Some sections are currently taken from john papa's styleguide and are subject to change in the future (as this stylguide grows).  
+The idea for this styleguide is inspired from [john papa's angular style guide](https://github.com/johnpapa/angular-styleguide) which is focused on angular version 1.x, written with ES5.
+Some sections are currently taken from john papa's styleguide and are subject to change in the future (as this stylguide grows).
 This styleguide is also inspired from [@angularclass's boilerplates](http://github.com/angularclass) for angular & es2015.
 
 ## Purpose
@@ -16,20 +16,19 @@ If you are looking for an opinionated style guide for syntax, conventions, and s
 The purpose of this style guide is to provide guidance on building Angular applications with ES2015 and module loading by showing the conventions I use and in order to prepare angular v 1.x code to angular v 2.
 
 ## Inspirations
-[NG6-Starter](https://github.com/AngularClass/NG6-starter)  
-[Angular, Gulp, Browserify](https://github.com/jakemmarsh/angularjs-gulp-browserify-boilerplate)  
+[NG6-Starter](https://github.com/AngularClass/NG6-starter)
+[Angular, Gulp, Browserify](https://github.com/jakemmarsh/angularjs-gulp-browserify-boilerplate)
 
 ## See the Styles in a Sample App
-This guide is based on my [open source Echoes Player application](http://echotu.be) that follows these styles and patterns. You can clone/fork the code at [echoes repository](https://github.com/orizens/echoes).  
+This guide is based on my [open source Echoes Player application](http://echotu.be) that follows these styles and patterns. You can clone/fork the code at [echoes repository](https://github.com/orizens/echoes).
 
 ##Translations
-TBD  
+TBD
 
 ## Table of Contents
 
 1. [Single Responsibility](#single-responsibility)
 1. [Modules](#modules)
-1. [Controllers](#controllers)
 1. [Components](#components)
 1. [Services](#services)
 
@@ -42,7 +41,7 @@ TBD
 The following example defines the several classes in the same file.
 
 ```javascript
-// now-playlist.controllers.js 
+// now-playlist.controllers.js
 /* avoid */
 export class NowPlaylistCtrl {}
 export class NowPlaylistFilterCtrl {}
@@ -75,18 +74,18 @@ Use [Proposed Loader Specification](https://whatwg.github.io/loader/) (Former ES
 ```javascript
 import NowPlaylist from './now-playlist';
 import { NowPlaylistComponent } from './now-playlist.component';
-```  
+```
 
-### Module Loaders Tools 
+### Module Loaders Tools
 
-* [System.js](https://github.com/systemjs/systemjs) 
-* [Browserify](http://browserify.org/) 
-* [Webpack](https://webpack.github.io/) 
-* [Typescript CLI](http://www.typescriptlang.org/) 
-  * [tsd is a type definition package manager](http://definitelytyped.org/tsd/) 
+* [System.js](https://github.com/systemjs/systemjs)
+* [Browserify](http://browserify.org/)
+* [Webpack](https://webpack.github.io/)
+* [Typescript CLI](http://www.typescriptlang.org/)
+  * [tsd is a type definition package manager](http://definitelytyped.org/tsd/)
 
-### Module Folder Structure 
-  
+### Module Folder Structure
+
 - each module directory should be named with a dash seperator (kebab notation).
 
 *Why?*: it follows the web-component notation of seperating a tag name with a dash. It is easier to read and follow in the code editor.
@@ -94,26 +93,26 @@ import { NowPlaylistComponent } from './now-playlist.component';
 ```
 // name of directory for <now-playlist></now-playlist> component
 - now-playlist
-```  
+```
 
 ### Module files
-  
-  - each module should contain the following:  
-  1. index.js - it should contain:   
-  1. module-name.component.js - a component (directive) file defintion with class as a controller  
-  1. an html template file  
-  1. a spec file  
+
+  - each module should contain the following:
+  1. index.js - it should contain:
+  1. module-name.component.js - a component (directive) file defintion with class as a controller
+  1. an html template file
+  1. a spec file
 
 #### index.js - module entry point
-  
-  should contain: 
-  * the module defintion 
-  * components/directives angular wrappers
-  * its dependencies 
-  * config phase & function 
-  * angular's entities wrappers - services, factories, additional components/directives, other.. 
 
-*Why?*: this is the file where we can hook vanilla js files into angular. This is the main point to see what this module is composed of.  
+  should contain:
+  * the module defintion
+  * components/directives angular wrappers
+  * its dependencies
+  * config phase & function
+  * angular's entities wrappers - services, factories, additional components/directives, other..
+
+*Why?*: this is the file where we can hook vanilla js files into angular. This is the main point to see what this module is composed of.
 
 ```javascript
 import angular from 'angular';
@@ -125,23 +124,23 @@ export default angular.module('now-playlist', [
     ])
     .config(config)
     .directive(NowPlaylistComponent.controllerAs, () => NowPlaylistComponent)
-    // with angular 1.5, the component definition is as follows: 
+    // with angular 1.5, the component definition is as follows:
     .component(NowPlaylistComponent.controllerAs, NowPlaylistComponent)
 ;
 // optional
 /* @ngInject */
 function config () {
-    
+
 }
-```  
+```
 #### module-name.component.js - component defintion with controller class
 
-  this file should contain: 
-  1. the component/directive **definition** as a literal object, with export. 
-  2. the **"controller"** property should be defined as a **class**. 
+  this file should contain:
+  1. the component/directive **definition** as a literal object, with export.
+  2. the **"controller"** property should be defined as a **class**.
   3. template should be imported from external file or inlined with template string es2015 syntax.
 
-*Why?*: It's easy to understand the bigger picture of this component: what are the inputs and outputs retrieved from scope. Everything is in one place and easier to reference. Moreover, this syntax is similar to angular 2 component definion - having the component configuration above the "controller" class.  
+*Why?*: It's easy to understand the bigger picture of this component: what are the inputs and outputs retrieved from scope. Everything is in one place and easier to reference. Moreover, this syntax is similar to angular 2 component definion - having the component configuration above the "controller" class.
 
 ```javascript
 import template from './now-playlist.tpl.html';
@@ -167,7 +166,7 @@ export let NowPlaylistComponent = {
         bindToController: true,
         replace: true,
         restrict: 'E',
-        controller: 
+        controller:
 /* @ngInject */
 class NowPlaylistCtrl {
     /* @ngInject */
@@ -191,9 +190,9 @@ class NowPlaylistCtrl {
 }
 ```
 
-## Controllers
+## Components
 * Use ES2015 class for controller
-* Use **Object.assign** to expose injected services to a class methods (make it public) 
+* Use **Object.assign** to expose injected services to a class methods (make it public)
 
 ```javascript
 /* @ngInject */
@@ -202,7 +201,7 @@ export default class YoutubeVideosCtrl {
 	constructor (YoutubePlayerSettings, YoutubeSearch, YoutubeVideoInfo) {
 		Object.assign(this, { YoutubePlayerSettings, YoutubeVideoInfo });
 		this.videos = YoutubePlayerSettings.items;
-		
+
 		YoutubeSearch.resetPageToken();
 		if (!this.videos.length) {
 			YoutubeSearch.search();
@@ -218,52 +217,20 @@ export default class YoutubeVideosCtrl {
 		return this.YoutubeVideoInfo.getPlaylist(playlist.id).then(this.YoutubePlayerSettings.playPlaylist);
 	}
 }
-```  
-
-## Components
-  - Define a component in X.component.js file using the directive defintion (pre angular v1.5) or component (from v1.5) definition.  
-  - import controller from a seperate file
-  - import template form a separate file (use module loader support to load text files)  
-
-```
-// playlist-saver.component.js
-import PlaylistSaverCtrl from './playlist-saver.ctrl.js';
-import template from './playlist-saver.tpl.html';
-
-// Usage:
-//	<playlist-saver></playlist-saver>
-
-/* @ngInject */
-export default function playlistSaver () {
-    var directive = {
-        template,
-        controller: PlaylistSaverCtrl,
-        controllerAs: 'playlistSaver',
-        bindToController: true,
-        restrict: 'E',
-        replace: true,
-        scope: {
-            onSave: '&?',
-            onCancel: '&?',
-            tracks: '='
-        }
-    };
-    return directive;
-}
 ```
 
 ## Services
 
-### angular.service  
+### angular.service
 Use **angular.service** api with a class for a service.
 
-*Why?*: Services in angular 2 are classes. it'll be easier to migrate the code.  
+*Why?*: Services in angular 2 are classes. it'll be easier to migrate the code.
 
-### angular.factory  
+### angular.factory
 use **angular.service** instead.
 
 ### angular.provider
-export a function as provider as in angular with ES5.  
+export a function as provider as in angular with ES5.
 
 ## Application Structure
 
@@ -283,13 +250,13 @@ export a function as provider as in angular with ES5.
 This directory includes **smart components**. it consumes the **app.core** services and usually doesn't expose any api in attributes.
 It's like an app inside a smart phone. It consumes the app's services (ask to consume it) and knows how to do its stuff.
 
-Usage of such smart component is as follows:  
+Usage of such smart component is as follows:
 
 ```html
 <now-playing></now-playing>
 ```
 
-Example definition in **index.js** can be:  
+Example definition in **index.js** can be:
 
 ```javascript
 import angular from 'angular';
@@ -312,7 +279,7 @@ export default angular.module('now-playing', [
 ;
 /* @ngInject */
 function config () {
-    
+
 }
 ```
 ## Testing
@@ -365,7 +332,7 @@ Note: When using Mocha, also consider choosing an assert library such as [Chai](
 **[Back to top](#table-of-contents)**
 
 ## Comments
-TBD  
+TBD
 
 ## ES Lint
 
@@ -387,21 +354,21 @@ TBD
     defaultParams: true
 }
 ```
-More To Come...  
+More To Come...
 
 **[Back to top](#table-of-contents)**
 
 ## Routing
-TBD  
+TBD
 
 ## Contributing
 
-1. Open an issue for discussion  
-2. Create a pull request to suggest additions or changes  
+1. Open an issue for discussion
+2. Create a pull request to suggest additions or changes
 
 ## License
 
-Share your thoughts with an issue or pull request  
+Share your thoughts with an issue or pull request
 
 ### Copyright
 
