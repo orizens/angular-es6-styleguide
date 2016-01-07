@@ -69,7 +69,7 @@ export default class NowPlaylistFilterCtrl {}
 
 Use [Proposed Loader Specification](https://whatwg.github.io/loader/) (Former ES6/ES2015)
 
-*Why?*: it assists in bundling the app and promotes the seperation of concerns. In Addition, Angular 2 is also based on   Loader's standards.
+**Why?**: it assists in bundling the app and promotes the seperation of concerns. In Addition, Angular 2 is also based on   Loader's standards.
 
 ```javascript
 import NowPlaylist from './now-playlist';
@@ -88,7 +88,7 @@ import { NowPlaylistComponent } from './now-playlist.component';
 
 - each module directory should be named with a dash seperator (kebab notation).
 
-*Why?*: it follows the web-component notation of seperating a tag name with a dash. It is easier to read and follow in the code editor.
+**Why?**: it follows the web-component notation of seperating a tag name with a dash. It is easier to read and follow in the code editor.
 
 ```
 // name of directory for <now-playlist></now-playlist> component
@@ -112,7 +112,7 @@ import { NowPlaylistComponent } from './now-playlist.component';
   * config phase & function
   * angular's entities wrappers - services, factories, additional components/directives, other..
 
-*Why?*: this is the file where we can hook vanilla js files into angular. This is the main point to see what this module is composed of.
+**Why?**: this is the file where we can hook vanilla js files into angular. This is the main point to see what this module is composed of.
 
 ```javascript
 import angular from 'angular';
@@ -140,7 +140,7 @@ function config () {
   2. the **"controller"** property should be defined as a **class**.
   3. template should be imported from external file or inlined with template string es2015 syntax.
 
-*Why?*: It's easy to understand the bigger picture of this component: what are the inputs and outputs retrieved from scope. Everything is in one place and easier to reference. Moreover, this syntax is similar to angular 2 component definion - having the component configuration above the "controller" class.
+**Why?**: It's easy to understand the bigger picture of this component: what are the inputs and outputs retrieved from scope. Everything is in one place and easier to reference. Moreover, this syntax is similar to angular 2 component definion - having the component configuration above the "controller" class.
 
 ```javascript
 import template from './now-playlist.tpl.html';
@@ -194,6 +194,8 @@ class NowPlaylistCtrl {
 * Use ES2015 class for controller
 * Use **Object.assign** to expose injected services to a class methods (make it public)
 
+**Why?** - ```Object.assign``` is a nice one liner usage for overloading services on "this" context, making it available to all methods in a service (i.e., **playVideo** method).
+
 ```javascript
 /* @ngInject */
 export default class YoutubeVideosCtrl {
@@ -220,11 +222,14 @@ export default class YoutubeVideosCtrl {
 ```
 
 ## Services
+It's a best practice to write all logics in services.
+
+**Why?**: logics can be reused in multiple files. logics can be tested easily whne in a service object.
 
 ### angular.service
 Use **angular.service** api with a class for a service.
 
-*Why?*: Services in angular 2 are classes. it'll be easier to migrate the code.
+**Why?**: Services in angular 2 are classes. it'll be easier to migrate the code.
 
 ### angular.factory
 use **angular.service** instead.
@@ -235,6 +240,8 @@ export a function as provider as in angular with ES5.
 ## Application Structure
 
 ### Overall Guidelines
+[-] - a folder
+an * - a file
 
 ```
 [-] src
@@ -247,7 +254,7 @@ export a function as provider as in angular with ES5.
   * index.html
 ```
 #### src/components
-This directory includes **smart components**. it consumes the **app.core** services and usually doesn't expose any api in attributes.
+This directory includes **smart components**. It consumes the **app.core** services and usually doesn't expose any api in attributes.
 It's like an app inside a smart phone. It consumes the app's services (ask to consume it) and knows how to do its stuff.
 
 Usage of such smart component is as follows:
@@ -282,6 +289,14 @@ function config () {
 
 }
 ```
+
+#### src/core/components
+This directory includes system wide **dumb components**. A Dumb Component gets data and fire events. It is communicating only through events.
+This is example:
+```javascript
+<dropdown items="vm.presets" on-select="vm.handlePresetSelect(item, index)"></dropdown>
+```
+
 ## Testing
 Unit testing helps maintain clean code, as such I included some of my recommendations for unit testing foundations with links for more information.
 
@@ -289,7 +304,7 @@ Unit testing helps maintain clean code, as such I included some of my recommenda
 
 - Write a set of tests for every story. Start with an empty test and fill them in as you write the code for the story.
 
-*Why?*: Writing the test descriptions helps clearly define what your story will do, will not do, and how you can measure success.
+**Why?**: Writing the test descriptions helps clearly define what your story will do, will not do, and how you can measure success.
 
 ```javascript
 it('should have a collection of media items', function() {
@@ -306,7 +321,7 @@ it('should find fetch metadata for a youtube media', function() {
 
 - Use [Jasmine](http://jasmine.github.io/) or [Mocha](http://mochajs.org) for unit testing.
 
-*Why?*: Both Jasmine and Mocha are widely used in the Angular community. Both are stable, well maintained, and provide robust testing features.
+**Why?**: Both Jasmine and Mocha are widely used in the Angular community. Both are stable, well maintained, and provide robust testing features.
 
 Note: When using Mocha, also consider choosing an assert library such as [Chai](http://chaijs.com). I prefer Mocha.
 
@@ -314,9 +329,9 @@ Note: When using Mocha, also consider choosing an assert library such as [Chai](
 
 - Use [Karma](http://karma-runner.github.io) as a test runner.
 
-*Why?*: Karma is easy to configure to run once or automatically when you change your code.
+**Why?**: Karma is easy to configure to run once or automatically when you change your code.
 
-*Why?*: Karma hooks into your Continuous Integration process easily on its own or through Grunt or Gulp.
+**Why?**: Karma hooks into your Continuous Integration process easily on its own or through Grunt or Gulp.
 
 **[Back to top](#table-of-contents)**
 
@@ -325,9 +340,9 @@ Note: When using Mocha, also consider choosing an assert library such as [Chai](
 - Place unit test files (specs) side-by-side within the component's code.
 - Place mocks in a **tests/mocks** folder
 
-*Why?*: Unit tests have a direct correlation to a specific component and file in source code.
+**Why?**: Unit tests have a direct correlation to a specific component and file in source code.
 
-*Why?*: Mock files (json) should be agnostic to the component which is using them. Multiple components specs might use the same jsom mocks.
+**Why?**: Mock files (json) should be agnostic to the component which is using them. Multiple components specs might use the same jsom mocks.
 
 **[Back to top](#table-of-contents)**
 
@@ -340,9 +355,9 @@ TBD
 - Use [eslint.org](http://eslint.org/) to deifne es2015 support
 - Use **.eslintrc** file for linting and support es2015 features
 
-*Why?*: Provides a first alert prior to committing any code to source control.
+**Why?**: Provides a first alert prior to committing any code to source control.
 
-*Why?*: Provides consistency across your team.
+**Why?**: Provides consistency across your team.
 
 ```javascript
 {
