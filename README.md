@@ -222,9 +222,9 @@ export default class YoutubeVideosCtrl {
 ```
 
 ## Services
-It's a best practice to write all logics in services.
+It's a best practice to write all logic in services.
 
-**Why?**: logics can be reused in multiple files. logics can be tested easily whne in a service object.
+**Why?**: logic can be reused in multiple files. logic can be tested easily when in a service object.
 
 ### angular.service
 Use **angular.service** api with a class for a service.
