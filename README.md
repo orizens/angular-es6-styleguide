@@ -31,6 +31,21 @@ TBD
 1. [Modules](#modules)
 1. [Components](#components)
 1. [Services](#services)
+1. [Testing](#testing)
+1. [Testing Guidelines](#testing-guidelines)
+1. [Write Tests with Stories](#write-tests-with-stories)
+1. [Testing Library](#testing-library)
+1. [Test Runner](#test-runner)
+1. [Testing Controllers](#testing-controllers)
+1. [Organizing Tests](#organizing-tests)
+1. [Comments](#comments)
+1. [ES Lint](#es-lint)
+1. [Use an Options File](#use-an-options-file)
+1. [Routing](#routing)
+1. [Contributing](#contributing)
+1. [License](#license)
+1. [Copyright](#copyright)
+
 
 ## Single Responsibility
 
@@ -78,11 +93,11 @@ import { NowPlaylistComponent } from './now-playlist.component';
 
 ### Module Loaders Tools
 
-* [System.js](https://github.com/systemjs/systemjs)
-* [Browserify](http://browserify.org/)
-* [Webpack](https://webpack.github.io/)
-* [Typescript CLI](http://www.typescriptlang.org/)
-  * [tsd is a type definition package manager](http://definitelytyped.org/tsd/)
+- [System.js](https://github.com/systemjs/systemjs)
+- [Browserify](http://browserify.org/)
+- [Webpack](https://webpack.github.io/)
+- [Typescript CLI](http://www.typescriptlang.org/)
+  - [tsd is a type definition package manager](http://definitelytyped.org/tsd/)
 
 ### Module Folder Structure
 
@@ -300,7 +315,10 @@ This is example:
 ## Testing
 Unit testing helps maintain clean code, as such I included some of my recommendations for unit testing foundations with links for more information.
 
-### Write Tests with Stories
+### Testing Guidelines
+These are guidelines to follow for setup an environment for testing.
+
+#### Write Tests with Stories
 
 - Write a set of tests for every story. Start with an empty test and fill them in as you write the code for the story.
 
@@ -317,7 +335,7 @@ it('should find fetch metadata for a youtube media', function() {
 
 ```
 
-### Testing Library
+#### Testing Library
 
 - Use [Jasmine](http://jasmine.github.io/) or [Mocha](http://mochajs.org) for unit testing.
 
@@ -325,7 +343,7 @@ it('should find fetch metadata for a youtube media', function() {
 
 Note: When using Mocha, also consider choosing an assert library such as [Chai](http://chaijs.com). I prefer Mocha.
 
-### Test Runner
+#### Test Runner
 
 - Use [Karma](http://karma-runner.github.io) as a test runner.
 
@@ -334,6 +352,18 @@ Note: When using Mocha, also consider choosing an assert library such as [Chai](
 **Why?**: Karma hooks into your Continuous Integration process easily on its own or through Grunt or Gulp.
 
 **[Back to top](#table-of-contents)**
+
+### Testing Controllers
+Since controllers are written as classes, unit tests should be written to check functionality.
+Follow this post for [testing angular 1.x components written with ES2015](http://orizens.com/wp/topics/testing-angular-1-x-es2015-component-with-jasmine/)
+Steps to follow:
+1. import the component javascript file
+1. setup a mocked module
+1. setup spies (if needed)
+1. use ```$controller``` to instanciate a new controller.
+  1. 1st argument is the component's controller ("class").
+  1. 2nd argument is an object with a new scope and possibly anh mocked objects/spies from previous steps.
+1. use ```scope.$digest``` to apply compilation and mock an "angular" data digest cycle (optional in some cases - TBD)
 
 ### Organizing Tests
 
