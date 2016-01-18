@@ -383,7 +383,7 @@ TBD
 
 ### Use an Options File
 - Use [eslint.org](http://eslint.org/) to deifne es2015 support
-- Use **.eslintrc** file for linting and support es2015 features
+- Use **.eslintrc.json** file for linting and support es2015 features
 
 **Why?**: Provides a first alert prior to committing any code to source control.
 
