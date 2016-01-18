@@ -371,7 +371,6 @@ Steps to follow:
 - Place mocks in a **tests/mocks** folder
 
 **Why?**: Unit tests have a direct correlation to a specific component and file in source code.
-
 **Why?**: Mock files (json) should be agnostic to the component which is using them. Multiple components specs might use the same jsom mocks.
 
 **[Back to top](#table-of-contents)**
@@ -386,7 +385,6 @@ TBD
 - Use **.eslintrc.json** file for linting and support es2015 features
 
 **Why?**: Provides a first alert prior to committing any code to source control.
-
 **Why?**: Provides consistency across your team.
 
 ```javascript
