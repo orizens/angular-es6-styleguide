@@ -1,7 +1,5 @@
 
-# Angular ES2015 Style Guide
-
-## This is still a Work In Progress - Please Collaborate
+# Angular 1.5 - ES6/ES2015 Style Guide
 
 ## Endorsements
 The idea for this styleguide is inspired from [john papa's angular style guide](https://github.com/johnpapa/angular-styleguide) which is focused on angular version 1.x, written with ES5.
@@ -9,7 +7,7 @@ Some sections are currently taken from john papa's styleguide and are subject to
 This styleguide is also inspired from [@angularclass's boilerplates](http://github.com/angularclass) for angular & es2015.
 
 ## Purpose
-*Opinionated Angular.js written with ES2015 and module loadeing style guide for teams by [@orizens](//twitter.com/orizens)*
+*Opinionated Angular.js written with ES6/ES2015 and module loading style guide for teams by [@orizens](//twitter.com/orizens)*
 
 If you are looking for an opinionated style guide for syntax, conventions, and structuring Angular.js applications v 1.x with ES2015 and module loading, then this is it. These styles are based on my development experience with [Angular.js](//angularjs.org) and the [Echoes Player](http://echotu.be), [Open Source Project Development (currently the es2015 branch)](https://github.com/orizens/echoes/tree/es2015).
 
@@ -138,8 +136,8 @@ export default angular.module('now-playlist', [
       'angular-sortable-view'
     ])
     .config(config)
-    .directive(NowPlaylistComponent.controllerAs, () => NowPlaylistComponent)
-    // with angular 1.5, the component definition is as follows:
+    .component(NowPlaylistComponent.selector, NowPlaylistComponent)
+    // OR - if you defined controllerAs similary to the component's element:
     .component(NowPlaylistComponent.controllerAs, NowPlaylistComponent)
 ;
 // optional
@@ -153,7 +151,10 @@ function config () {
   this file should contain:
   1. the component/directive **definition** as a literal object, with export.
   2. the **"controller"** property should be defined as a **class**.
-  3. template should be imported from external file or inlined with template string es2015 syntax.
+  3. inlined with template string es6/es2015 syntax.
+  4. if template is huge (30 lines), consider:
+    4.1 break the template to smaller reusable components.
+    4.2 fallback to a template that should be imported from external file.
 
 **Why?**: It's easy to understand the bigger picture of this component: what are the inputs and outputs retrieved from scope. Everything is in one place and easier to reference. Moreover, this syntax is similar to angular 2 component definion - having the component configuration above the "controller" class.
 
@@ -161,29 +162,24 @@ function config () {
 import template from './now-playlist.tpl.html';
 
 export let NowPlaylistComponent = {
-        template,
-        // if using inline template then use template strings (es2015):
-        template: `
-          <section class="now-playlist">
-              ....
-          </section>
-        `,
-        controllerAs: 'nowPlaylist',
-        // or "bindings" to follow ng1.5 "component" factory
-        scope: {
-            videos: '=',
-            filter: '=',
-            nowPlaying: '=',
-            onSelect: '&',
-            onRemove: '&',
-            onSort: '&'
-        },
-        bindToController: true,
-        replace: true,
-        restrict: 'E',
-        controller:
-/* @ngInject */
-class NowPlaylistCtrl {
+  selector: 'nowPlaylist',
+  template,
+  // if using inline template then use template strings (es2015):
+  template: `
+    <section class="now-playlist">
+        ....
+    </section>
+  `,
+  // Optional: controllerAs: 'nowPlaylist',
+  bindings: {
+      videos: '<',
+      filter: '<',
+      nowPlaying: '<',
+      onSelect: '&',
+      onRemove: '&',
+      onSort: '&'
+  },
+  controller: class NowPlaylistCtrl {
     /* @ngInject */
     constructor () {
         // injected with this.videos, this.onRemove, this.onSelect
@@ -201,38 +197,65 @@ class NowPlaylistCtrl {
     sortVideo($item, $indexTo) {
         this.onSort && this.onSort({ $item, $indexTo });
     }
-}
+  }
 }
 ```
 
-## Components
+## Components (as of Angular 1.5)
 * Use ES2015 class for controller
 * Use **Object.assign** to expose injected services to a class methods (make it public)
 
-**Why?** - ```Object.assign``` is a nice one liner usage for overloading services on "this" context, making it available to all methods in a service (i.e., **playVideo** method).
+**Why?** - ```Object.assign``` is a nice one liner usage for overloading services on "this" context, making it available to all methods in a service (i.e., **playVideo** method). 
+**Why?** - it follows the paradigm of angular 2 component class (controller), where you would define "public"/"private" on constructor's argument in order to create references on "this" context.
 
 ```javascript
-/* @ngInject */
-export default class YoutubeVideosCtrl {
-	/* @ngInject */
-	constructor (YoutubePlayerSettings, YoutubeSearch, YoutubeVideoInfo) {
-		Object.assign(this, { YoutubePlayerSettings, YoutubeVideoInfo });
-		this.videos = YoutubePlayerSettings.items;
+export let NowPlaylistComponent = {
+  // ....
+  controller: class YoutubeVideosCtrl {
+    /* @ngInject */
+    constructor (YoutubePlayerSettings, YoutubeSearch, YoutubeVideoInfo) {
+      Object.assign(this, { YoutubePlayerSettings, YoutubeVideoInfo });
+      this.videos = YoutubePlayerSettings.items;
 
-		YoutubeSearch.resetPageToken();
-		if (!this.videos.length) {
-			YoutubeSearch.search();
-		}
-	}
+      YoutubeSearch.resetPageToken();
+      if (!this.videos.length) {
+        YoutubeSearch.search();
+      }
+    }
 
-	playVideo (video) {
-		this.YoutubePlayerSettings.queueVideo(video);
-		this.YoutubePlayerSettings.playVideoId(video);
-	}
+    playVideo (video) {
+      this.YoutubePlayerSettings.queueVideo(video);
+      this.YoutubePlayerSettings.playVideoId(video);
+    }
 
-	playPlaylist (playlist) {
-		return this.YoutubeVideoInfo.getPlaylist(playlist.id).then(this.YoutubePlayerSettings.playPlaylist);
-	}
+    playPlaylist (playlist) {
+      return this.YoutubeVideoInfo.getPlaylist(playlist.id).then(this.YoutubePlayerSettings.playPlaylist);
+    }
+  }
+}
+``` 
+
+### Component Options
+#### controllerAs
+if starting a new component, use the default **$ctrl**. 
+if migrating and want to keep the **controllerAs** custom name, define a 'selector' property the same as the camelCased controllerAs value, which will be used with the **angular.component** factory.
+
+**WHY?**: 'selector' in angular 2 indicates the "css" selector which will be used in html. When migrating to Angular 2, it will be easier to transform it to the kebab case.
+
+```
+// when controllerAs isn't explicitly defined
+// and used as the default "$ctrl"
+export let NowPlaylistComponent = {
+  selector: 'nowPlaylist'
+  ...
+}
+
+// when controllerAs is explicitly defined
+// and NOT used as the default "$ctrl"
+export let NowPlaylistComponent = {
+  // when migrating to angular 2 => selector: 'now-playlist'
+  selector: 'nowPlaylist'
+  controllerAs: 'nowPlaylist'
 }
 ```
 
@@ -269,7 +292,7 @@ an * - a file
   * index.html
 ```
 #### src/components
-This directory includes **smart components**. It consumes the **app.core** services and usually doesn't expose any api in attributes.
+This directory includes **SMART components**. It consumes the **app.core** services and usually doesn't expose any api in attributes.
 It's like an app inside a smart phone. It consumes the app's services (ask to consume it) and knows how to do its stuff.
 
 Usage of such smart component is as follows:
@@ -283,7 +306,7 @@ Example definition in **index.js** can be:
 ```javascript
 import angular from 'angular';
 import AppCore from '../core';
-import nowPlaying from './now-playing.component.js';
+import { NowPlayingComponent } from './now-playing.component.js';
 import nowPlaylist from './now-playlist';
 import nowPlaylistFilter from './now-playlist-filter';
 import playlistSaver from './playlist-saver';
@@ -297,7 +320,7 @@ export default angular.module('now-playing', [
       YoutubePlayer.name
     ])
     .config(config)
-    .directive('nowPlaying', nowPlaying)
+    .component(NowPlayingComponent.selector, NowPlayingComponent)
 ;
 /* @ngInject */
 function config () {
@@ -306,7 +329,7 @@ function config () {
 ```
 
 #### src/core/components
-This directory includes system wide **dumb components**. A Dumb Component gets data and fire events. It is communicating only through events.
+This directory includes system wide **DUMB components**. A Dumb Component gets data and fire events. It is communicating only through events.
 This is example:
 ```javascript
 <dropdown items="vm.presets" on-select="vm.handlePresetSelect(item, index)"></dropdown>
