@@ -380,13 +380,14 @@ Note: When using Mocha, also consider choosing an assert library such as [Chai](
 Since controllers are written as classes, unit tests should be written to check functionality.
 Follow this post for [testing angular 1.x components written with ES2015](http://orizens.com/wp/topics/testing-angular-1-x-es2015-component-with-jasmine/)
 Steps to follow:
+
 1. import the component javascript file
-1. setup a mocked module
-1. setup spies (if needed)
-1. use ```$controller``` to instanciate a new controller.
+2. setup a mocked module
+3. setup spies (if needed)
+4. use ```$controller``` to instanciate a new controller.
   1. 1st argument is the component's controller ("class").
-  1. 2nd argument is an object with a new scope and possibly anh mocked objects/spies from previous steps.
-1. use ```scope.$digest``` to apply compilation and mock an "angular" data digest cycle (optional in some cases - TBD)
+  2. 2nd argument is an object with a new scope and possibly anh mocked objects/spies from previous steps.
+5. use ```scope.$digest``` to apply compilation and mock an "angular" data digest cycle (optional in some cases - TBD)
 
 ### Organizing Tests
 
@@ -404,7 +405,7 @@ TBD
 ## ES Lint
 
 ### Use an Options File
-- Use [eslint.org](http://eslint.org/) to deifne es2015 support
+- Use [eslint.org](http://eslint.org/) to define es2015 support
 - Use **.eslintrc.json** file for linting and support es2015 features
 
 **Why?**: Provides a first alert prior to committing any code to source control.
