@@ -54,10 +54,10 @@ TBD
 The following example defines the several classes in the same file.
 
 ```javascript
-// now-playlist.controllers.js
+// now-playlist.services.js
 /* avoid */
-export class NowPlaylistCtrl {}
-export class NowPlaylistFilterCtrl {}
+export class NowPlaylistProvider {}
+export class NowPlaylistCreator {}
 ```
 
 The same classes are now separated into their own files.
@@ -65,15 +65,15 @@ The same classes are now separated into their own files.
 ```javascript
 /* recommended */
 
-// now-playlist.ctrl.js
-export default class NowPlaylistCtrl {}
+// now-playlist-provider.service.js
+export default class NowPlaylistProvider {}
 ```
 
 ```javascript
 /* recommended */
 
-// now-playlist-filter.ctrljs
-export default class NowPlaylistFilterCtrl {}
+// now-playlist-creator.service.js
+export default class NowPlaylistCreator {}
 ```
 
 **[Back to top](#table-of-contents)**
@@ -82,7 +82,7 @@ export default class NowPlaylistFilterCtrl {}
 
 Use [Proposed Loader Specification](https://whatwg.github.io/loader/) (Former ES6/ES2015)
 
-**Why?**: it assists in bundling the app and promotes the seperation of concerns. In Addition, Angular 2 is also based on   Loader's standards.
+**Why?**: it assists in bundling the app and promotes the seperation of concerns. In Addition, Angular 2 is also based on Loader's standards.
 
 ```javascript
 import NowPlaylist from './now-playlist';
@@ -113,7 +113,9 @@ import { NowPlaylistComponent } from './now-playlist.component';
   - each module should contain the following:
   1. index.js - it should contain:
   1. module-name.component.js - a component (directive) file defintion with class as a controller
-  1. an html template file
+  1. template: 
+    1. Long html template: an html template file
+    2. Small html template: inline backtick template in component file
   1. a spec file
 
 #### index.js - module entry point
@@ -412,12 +414,46 @@ TBD
 
 ```javascript
 {
-    arrowFunctions: true,
-    classes: true,
-    modules: true,
-    restParams: true,
-    spread: true,
-    defaultParams: true
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "modules": true,
+      "arrowFunctions": true,
+      "blockBindings": true,
+      "destructuring": true,
+      "classes": true
+    }
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "quotes": [
+      2,
+      "single"
+    ],
+    "linebreak-style": [
+      2,
+      "unix"
+    ],
+    "semi": [
+      2,
+      "always"
+    ]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jasmine": true,
+    "commonjs": true
+  },
+  "globals": {
+    "angular": true,
+    "inject": true
+  },
+  "extends": "eslint:recommended"
 }
 ```
 More To Come...
