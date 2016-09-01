@@ -17,6 +17,11 @@ The purpose of this style guide is to provide guidance on building Angular appli
 [NG6-Starter](https://github.com/AngularClass/NG6-starter)
 [Angular, Gulp, Browserify](https://github.com/jakemmarsh/angularjs-gulp-browserify-boilerplate)
 
+-----------------------
+## NEW --> Quick Start <-- 
+Start a new angular project with [SuperNova Starter](https://github.com/orizens/supernova-angular-1.5.x-es6-starter) which is based on this styleguide. 
+----------------------- 
+
 ## See the Styles in a Sample App
 This guide is based on my [open source Echoes Player application](http://echotu.be) that follows these styles and patterns. You can clone/fork the code at [echoes repository](https://github.com/orizens/echoes).
 
@@ -25,7 +30,6 @@ TBD
 
 ## Table of Contents
 
-1. [Quick Start with SuperNova Starter](#quick-start)
 1. [Single Responsibility](#single-responsibility)
 1. [Modules](#modules)
 1. [Components](#components)
@@ -44,9 +48,6 @@ TBD
 1. [Contributing](#contributing)
 1. [License](#license)
 1. [Copyright](#copyright)
-
-## Quick Start
-Start a new angular project with [SuperNova Starter](https://github.com/orizens/supernova-angular-1.5.x-es6-starter) which is based on this styleguide. 
 
 ## Single Responsibility
 
