@@ -25,6 +25,7 @@ TBD
 
 ## Table of Contents
 
+1. [Quick Start with SuperNova Starter](#quick-start)
 1. [Single Responsibility](#single-responsibility)
 1. [Modules](#modules)
 1. [Components](#components)
@@ -44,6 +45,8 @@ TBD
 1. [License](#license)
 1. [Copyright](#copyright)
 
+## Quick Start
+Start a new angular project with [SuperNova Starter](https://github.com/orizens/supernova-angular-1.5.x-es6-starter) which is based on this styleguide. 
 
 ## Single Responsibility
 
