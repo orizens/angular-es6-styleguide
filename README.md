@@ -18,9 +18,9 @@ The purpose of this style guide is to provide guidance on building Angular appli
 [Angular, Gulp, Browserify](https://github.com/jakemmarsh/angularjs-gulp-browserify-boilerplate)
 
 -----------------------
-## NEW --> Quick Start <-- 
+## NEW Quick Start with SuperNova Starter
 Start a new angular project with [SuperNova Starter](https://github.com/orizens/supernova-angular-1.5.x-es6-starter) which is based on this styleguide. 
------------------------ 
+
 
 ## See the Styles in a Sample App
 This guide is based on my [open source Echoes Player application](http://echotu.be) that follows these styles and patterns. You can clone/fork the code at [echoes repository](https://github.com/orizens/echoes).
